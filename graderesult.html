@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Grade Result</title>
+        <style>
+            .email-body {
+                font-size:small;
+            }
+            .signature {
+                font-weight: bold;
+            }
+            .result {
+                font-family:Arial, Helvetica, sans-serif;
+            }
+            .address {
+                font-size: small;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <h2>Automail v1.0</h2>
+        <hr>
+        <div class="aplication">
+            <form>
+                <label>Điền email, tên học viên và số điểm:</label><br>
+                <input type="email" id="mail" placeholder="Enter Email">
+                <input type="text" id="fname" placeholder="Enter Name">
+                <input type="text" id="fgrade" placeholder="Enter result">
+                
+            </form>
+            <button onclick="fill()">Fill and copy</button>    
+        </div>
+        <hr>
+        <div class="result" id="result">
+            <div class="email-body">
+            <p>Dear <strong><span id="name"></span></strong>,</p>
+            <p>
+                Thank you for completing our online English proficiency test. It’s a really great tool for us to determine what your current English language Levels are and how long you would need to study with us once we know what your goals are for your future. Your score was <span style="color:orange;" id="grade"></span>.<br>
+
+                Please tell me more about your plans and goals with studying English. Would you like to study General English or Academic English to continue your further education? 
+                We have pathway partnerships with many colleges and universities as well. You can learn more about this on our website <a href="https://studyatlantic.com/">https://studyatlantic.com/</a> and here is the link to the pathway program <a href="https://studyatlantic.com/pathways-program/">https://studyatlantic.com/pathways-program/</a>
+
+                <br>At Atlantic Canada Language Academy (ACLA) we offer continuous intake, meaning you can begin your studies with us any Monday, either <strong>online</strong> or <strong>on-campus</strong>.
+
+                <br>Classes are Monday to Friday, 9am to 12:30pm (AST/ADT) and we also have one-on-one lessons as well as evening classes.<br><br>
+                We are now running OpenApply for admissions process. We would like you to sign up <a href="https://studyatlantic.openapply.com/">https://studyatlantic.openapply.com/</a>  to continue the next steps. Thank you.<br>
+
+                <br>We look forward to hearing from you.<br><br>
+
+                Best regards,<br></p>
+            </div>
+                <div class="signature">
+                    <p>The ACLA Admissions Team <br>
+                    <em>Atlantic Canada Language Academy</em><br>
+                    Celebrating 10 Years of Excellence<br>
+
+                    Formerly Eurocentres Atlantic Canada<br>
+                    <a href="www.StudyAtlantic.com">www.StudyAtlantic.com </a>
+                </div>
+                
+                <div class="address">
+                    <p>Lunenburg Academy, <a href="https://www.google.com/maps/search/97+Kaulbach+Street?entry=gmail&source=g">97 Kaulbach Street</a><br>
+                    PO Box 987 Lunenburg, NS, B0J 2C0<br>
+                    Tel. 1-902-634-6111<br><br>
+
+                    <a href="https://www.linkedin.com/company/acla-lunenburg/">LINKEDIN</a>  | <a href="https://www.facebook.com/AtlanticCanadaLanguageAcademy">FACEBOOK</a><br>
+
+                    <a href="https://www.facebook.com/groups/atlanticcanadacookingclub/?ref=share">🍁🌶🥕JOIN - ACLA cooking club Live - Weekly</a> <br>
+
+                    Sunday 9am Learning English Tastes great <br><br><br>
+
+                    
+
+                    <em>Confidentiality Notice: This message, including any attachments, is for the sole use of the intended recipient(s) and may contain confidential and privileged information. Any unauthorized review, use, disclosure, or distribution is strictly prohibited. If you are not the intended recipient, please contact the sender by reply e-mail and destroy all copies of the original message.</em>
+            </p>
+            <p><span id="email"></span></p>
+            <p><span id="subject"></span></p>
+                </div>
+            </p>
+        </div>
+        <hr>
+        
+        <script>
+            function copy(){
+                var range = document.createRange();
+                range.selectNode(document.getElementById("result"));
+                window.getSelection().removeAllRanges(); // clear current selection
+                window.getSelection().addRange(range); // to select text
+                document.execCommand("copy");
+                window.getSelection().removeAllRanges();// to deselect
+            }
+            function fill(){
+                document.getElementById("email").innerHTML = document.getElementById("mail").value;
+                document.getElementById("name").innerHTML = document.getElementById("fname").value;
+                document.getElementById("grade").innerHTML = document.getElementById("fgrade").value;
+                document.getElementById("subject").innerHTML = "RE: ACLA Free Enlish Language Test Result";
+                copy();
+            }
+        </script>
+    </body>
+    <button onclick="location.href='automail.html'">Back To title</button>
+
+    
+</html>
