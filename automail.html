@@ -4,22 +4,177 @@
     <head>
         <title>Auto mail</title>
         <style>
-            .controls {
-                width: 294px;
-                margin: 15px auto;
+            .email-body {
+                font-size:small;
             }
-
+            .signature {
+                font-weight: bold;
+            }
+            .inv, .result {
+                font-family:Arial, Helvetica, sans-serif;
+            }
+            .address {
+                font-size: small;
+            }
         </style>
     </head>
     
     <body>
         
-        <h1>Type of email reply: </h1>
-        
-        <div class="control">
-            <button onclick="location.href='graderesult.html'">Reply kết quả thi ESL của học viên</p>
-            <button onclick="location.href='examinvite.html'">Mời học viên làm bài thi ESL</button>
+        <!-- Auto Mail Exam Invite -->
+        <h2>Automail - Exam Invite</h2>
+        <hr>
+        <div class="aplication">
+            <form>
+                <label>Điền email và tên học viên:</label><br>
+                <input type="email" id="mail" placeholder="Enter Email" value="etarakoem@gmail.com">
+                <input type="text" id="fname" placeholder="Enter Name" value="Phuc">
+                
+            </form>
+            <button onclick="fill_invite()">Fill and copy</button>    
         </div>
+        <hr>
+
+        <div class="inv" id="inv">
+            <div class="email-body">
+            <p>Dear <strong><span id="name"></span></strong>,</p>
+            <p>
+                Hello from Lunenburg, Nova Scotia!<br>
+                Thank you for contacting Atlantic Canada Language Academy.<br>
+                We are a designated learning institution (DLI) in Lunenburg, Nova Scotia. We teach English and have some programs such as General English, Academic English (or Pathway Program/ IELTS Preparation Program), Summer Junior Program, Family Program. With our Letter of Acceptance, you can apply for the student visa.<br>
+                <br>At Atlantic Canada Language Academy (ACLA) we offer continuous intake, meaning you can begin your studies with us any Monday, either <strong>online</strong> or <strong>on-campus</strong>.
+
+                <br>Classes are Monday to Friday, 9am to 12:30pm (ADT) and we also have one-on-one lessons.<br><br>
+                Could you please tell us more about your plans and goals of studying English?<br>
+
+                We have pathway partnerships with many colleges and universities which means that if you graduate from our program, you are not required to take a standardized test such as IELTS or TOEFL as proof of English proficiency. You can learn more about this on our website <a href="https://studyatlantic.com/">https://studyatlantic.com/</a> and here is the link to the pathway program <a href="https://studyatlantic.com/pathways-program/">https://studyatlantic.com/pathways-program/.</a><br>
+                
+                When you have a moment, please take this free online English Proficiency test. <a href="https://form.jotform.com/210780789723364">https://form.jotform.com/210780789723364</a>. It’s a really great tool for us to determine what your current English language Levels are and how long you would need to study with us, and we could give you the quote to know about the price.<br>
+
+                Please let me know if I can support you in any way on your language journey.<br>
+
+                I am looking forward to hearing from you soon.<br>
+
+                Best regards,<br></p>
+            </div>
+                <div class="signature">
+                    <p>The ACLA Admissions Team <br>
+                    <em>Atlantic Canada Language Academy</em><br>
+                    Celebrating 10 Years of Excellence<br>
+
+                    Formerly Eurocentres Atlantic Canada<br>
+                    <a href="www.StudyAtlantic.com">www.StudyAtlantic.com </a>
+                </div>
+                
+                <div class="address">
+                    <p>Lunenburg Academy, <a href="https://www.google.com/maps/search/97+Kaulbach+Street?entry=gmail&source=g">97 Kaulbach Street</a><br>
+                    PO Box 987 Lunenburg, NS, B0J 2C0<br>
+                    Tel. 1-902-634-6111<br><br>
+
+                    <a href="https://www.linkedin.com/company/acla-lunenburg/">LINKEDIN</a>  | <a href="https://www.facebook.com/AtlanticCanadaLanguageAcademy">FACEBOOK</a><br>
+
+                    <a href="https://www.facebook.com/groups/atlanticcanadacookingclub/?ref=share">🍁🌶🥕JOIN - ACLA cooking club Live - Weekly</a> <br>
+
+                    Sunday 9am Learning English Tastes great <br><br><br>
+
+                    
+
+                    <em>Confidentiality Notice: This message, including any attachments, is for the sole use of the intended recipient(s) and may contain confidential and privileged information. Any unauthorized review, use, disclosure, or distribution is strictly prohibited. If you are not the intended recipient, please contact the sender by reply e-mail and destroy all copies of the original message.</em>
+            </p>
+            <p><span id="email"></span></p>
+            <p><span id="subject"></span></p>
+                </div>
+            </p>
+        </div>
+        <hr>
+
+        <!-- Automail Test Result -->
+        <h2>Automail Test Result </h2>
+        <hr>
+        <div class="aplication">
+            <form>
+                <label>Điền email, tên học viên và số điểm:</label><br>
+                <input type="email" id="mail2" placeholder="Enter Email" value="etarakoem@gmail.com">
+                <input type="text" id="fname2" placeholder="Enter Name" value="Phuc">
+                <input type="text" id="fgrade" placeholder="Enter result" value="C1">
+                
+            </form>
+            <button onclick="fill_result()">Fill and copy</button>    
+        </div>
+        <hr>
+        <div class="result" id="result">
+            <div class="email-body">
+            <p>Dear <strong><span id="name2"></span></strong>,</p>
+            <p>
+                Thank you for completing our online English proficiency test. It’s a really great tool for us to determine what your current English language Levels are and how long you would need to study with us once we know what your goals are for your future. Your score was <span style="color:orange;" id="grade"></span>.<br>
+
+                Please tell me more about your plans and goals with studying English. Would you like to study General English or Academic English to continue your further education? 
+                We have pathway partnerships with many colleges and universities as well. You can learn more about this on our website <a href="https://studyatlantic.com/">https://studyatlantic.com/</a> and here is the link to the pathway program <a href="https://studyatlantic.com/pathways-program/">https://studyatlantic.com/pathways-program/</a>
+
+                <br>At Atlantic Canada Language Academy (ACLA) we offer continuous intake, meaning you can begin your studies with us any Monday, either <strong>online</strong> or <strong>on-campus</strong>.
+
+                <br>Classes are Monday to Friday, 9am to 12:30pm (AST/ADT) and we also have one-on-one lessons as well as evening classes.<br><br>
+                We are now running OpenApply for admissions process. We would like you to sign up <a href="https://studyatlantic.openapply.com/">https://studyatlantic.openapply.com/</a>  to continue the next steps. Thank you.<br>
+
+                <br>We look forward to hearing from you.<br><br>
+
+                Best regards,<br></p>
+            </div>
+                <div class="signature">
+                    <p>The ACLA Admissions Team <br>
+                    <em>Atlantic Canada Language Academy</em><br>
+                    Celebrating 10 Years of Excellence<br>
+
+                    Formerly Eurocentres Atlantic Canada<br>
+                    <a href="www.StudyAtlantic.com">www.StudyAtlantic.com </a>
+                </div>
+                
+                <div class="address">
+                    <p>Lunenburg Academy, <a href="https://www.google.com/maps/search/97+Kaulbach+Street?entry=gmail&source=g">97 Kaulbach Street</a><br>
+                    PO Box 987 Lunenburg, NS, B0J 2C0<br>
+                    Tel. 1-902-634-6111<br><br>
+
+                    <a href="https://www.linkedin.com/company/acla-lunenburg/">LINKEDIN</a>  | <a href="https://www.facebook.com/AtlanticCanadaLanguageAcademy">FACEBOOK</a><br>
+
+                    <a href="https://www.facebook.com/groups/atlanticcanadacookingclub/?ref=share">🍁🌶🥕JOIN - ACLA cooking club Live - Weekly</a> <br>
+
+                    Sunday 9am Learning English Tastes great <br><br><br>
+
+                    
+
+                    <em>Confidentiality Notice: This message, including any attachments, is for the sole use of the intended recipient(s) and may contain confidential and privileged information. Any unauthorized review, use, disclosure, or distribution is strictly prohibited. If you are not the intended recipient, please contact the sender by reply e-mail and destroy all copies of the original message.</em>
+            </p>
+            <p><span id="email2"></span></p>
+            <p><span id="subject2"></span></p>
+                </div>
+            </p>
+        </div>
+        <hr>
+
+        <script>
+            function copy(id){
+                var range = document.createRange();
+                range.selectNode(document.getElementById(id));
+                window.getSelection().removeAllRanges(); // clear current selection
+                window.getSelection().addRange(range); // to select text
+                document.execCommand("copy");
+                window.getSelection().removeAllRanges();// to deselect
+            }
+            function fill_invite(id){
+                document.getElementById("email").innerHTML = document.getElementById("mail").value;
+                document.getElementById("name").innerHTML = document.getElementById("fname").value;
+                document.getElementById("subject").innerHTML = "Studying English at Atlantic Canada Language Academy";
+                copy("inv");
+            }
+            function fill_result(){
+                document.getElementById("email2").innerHTML = document.getElementById("mail2").value;
+                document.getElementById("name2").innerHTML = document.getElementById("fname2").value;
+                document.getElementById("grade").innerHTML = document.getElementById("fgrade").value;
+                document.getElementById("subject2").innerHTML = "RE: ACLA Free Enlish Language Test Result";
+                copy("result");
+            }
+        </script>
+    
     </body>
 
     
