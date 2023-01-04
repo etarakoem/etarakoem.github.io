@@ -1,0 +1,11 @@
+{
+    "name": "AutoMail for Mom",
+    "version": "1.0.0",
+    "description": "Quick Mail template to response to students",
+    "manifest_version": 3,
+    "author": "Samuel Hua",
+    "action":{
+        "default_popup": "automail.html",
+        "default_title": "AutoMail"
+    }
+}
