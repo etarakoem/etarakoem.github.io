@@ -21,7 +21,7 @@ function fill_result(){
 }
 
 // Script for tabs
-function openTab(evt, tabsection) {
+function openTab(tabsection) {
     // Declare all variables
     var i, tabcontent, tablinks;
 
@@ -39,10 +39,10 @@ function openTab(evt, tabsection) {
 
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(tabsection).style.display = "block";
-    evt.currentTarget.className += " active";
+    event.currentTarget.className += " active";
 }
-
-document.getElementById("examTab").addEventListener("click",openTab(event, 'examInvite'));
-document.getElementById("testTab").addEventListener("click",openTab(event, 'testResult'));
+window.onload(openTab('examInvite'));
+document.getElementById("examTab").addEventListener("click",openTab('examInvite'));
+document.getElementById("testTab").addEventListener("click",openTab('testResult'));
 document.getElementById("fillInvite").addEventListener("click",fill_invite());
 document.getElementById("fillResult").addEventListener("click",fill_result());
