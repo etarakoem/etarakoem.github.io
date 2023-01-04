@@ -20,10 +20,41 @@ function fill_result(){
     copy("result");
 }
 
+//Open Page
+
+function openPage(tabsection) {
+    // Get all elements with class="tabcontent" and hide them
+    let tabcontent = document.getElementsByClassName("tabcontent");
+    for (let i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    let tablinks = document.getElementsByClassName("tablinks");
+    for (let i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    var newElement = document.getElementById(tabsection);
+    newElement.style.display = "block";
+    newElement.classList.add("active");
+}
+
+// London is active by defult
+// var defaultElement = document.getElementById("examInvite");
+// defaultElement.style.display = "block";
+// defaultElement.classList.add("active");
+
+document.getElementById("examTab").addEventListener("click",openPage('examInvite'));
+document.getElementById("testTab").addEventListener("click",openPage('testResult'));
+
+
 // Script for tabs
 function openTab(tabsection) {
     // Declare all variables
     var i, tabcontent, tablinks;
+    
 
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -41,8 +72,11 @@ function openTab(tabsection) {
     document.getElementById(tabsection).style.display = "block";
     event.currentTarget.className += " active";
 }
-window.onload(openTab('examInvite'));
-document.getElementById("examTab").addEventListener("click",openTab('examInvite'));
-document.getElementById("testTab").addEventListener("click",openTab('testResult'));
+// window.onload(openTab('examInvite'));
+// document.getElementById("examTab").addEventListener("click",openTab('examInvite'));
+// document.getElementById("testTab").addEventListener("click",openTab('testResult'));
+
+
+// Stay Unchanged
 document.getElementById("fillInvite").addEventListener("click",fill_invite());
 document.getElementById("fillResult").addEventListener("click",fill_result());
