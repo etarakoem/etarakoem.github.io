@@ -37,7 +37,6 @@
 
         .button-19:after {
         background-clip: padding-box;
-        background-color: #1CB0F6;
         border: solid transparent;
         border-radius: 16px;
         border-width: 0 0 4px;
@@ -48,6 +47,14 @@
         right: 0;
         top: 0;
         z-index: -1;
+        }
+
+        .button-blue {
+            background-color: #1CB0F6;
+        }
+
+        .button-red {
+            background-color: #f61c1c;
         }
 
         .button-19:main,
@@ -131,7 +138,7 @@
 
         .center {
         margin: auto;
-        width: 50%;
+        width: 45%;
         padding: 10px;
         }
     </style>
@@ -195,8 +202,8 @@
             </tr>
         </tbody>
     </table>
-    <button class="button-19 center" role="button" onclick="cal()">Tính</button>
-    <button class="button-19 center" role="button" onClick="window.location.reload();">Refresh</button>
+    <button class="button-19 center button-blue" role="button" onclick="cal()">Tính</button>
+    <button class="button-19 center button-red" role="button" onClick="window.location.reload();">Refresh</button>
 
     
     <script>
