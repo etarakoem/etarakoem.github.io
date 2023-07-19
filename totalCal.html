@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hôm nay làm được bao nhiêu ta?</title>
+    <style>
+        label
+        {
+            display: inline-block;
+            float: left;
+            clear: left;
+            width: 250px;
+            text-align: left;
+        }
+        input 
+        {
+            display: inline-block;
+            float: left;
+        }
+        .table {
+        font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .table thead {
+        position: sticky;
+        top: 0;
+        }
+
+        .table thead th {
+        border: 1px solid #e4eff8;
+        background: white;
+        cursor: pointer;
+        }
+
+        .table thead th.header-label {
+        cursor: pointer;
+        background: linear-gradient(0deg, #e4eff8, #4578a2 5%, #e4eff8 150%);
+        color: white;
+        border: 1px solid white;
+        }
+
+        .table th,
+        .table td {
+        padding: 0.2rem 0.5rem;
+        text-align: center;
+        }
+
+        .table td {
+        border: 1px solid #e4eff8;
+        }
+
+        .table .tr-inputs th {
+        position: relative;
+        padding: 0;
+        padding-bottom: 1.2rem;
+        margin: 0;
+        }
+
+        .table .tr-inputs div {
+        position: absolute;
+        display: inline-block;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        }
+
+        .table input {
+        width: 100%;
+        box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1> Đây là máy tính tiền lẻ cho em nè em bé</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="header-label">Cash ($)</th>
+                <th class="header-label">Count</th>
+                <th class="header-label">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>$50</td>
+                <td><input type="number" id="a" placeholder="0"><br></td>
+                <td>$<span id="ta">0</span></td>
+            </tr>
+            <tr>
+                <td>$20</td>
+                <td><input type="number" id="b" placeholder="0"><br></td>
+                <td>$<span id="tb">0</span></td>
+            </tr>
+            <tr>
+                <td>$10</td>
+                <td><input type="number" id="c" placeholder="0"><br></td>
+                <td>$<span id="tc">0</span></td>
+            </tr>
+            <tr>
+                <td>$5</td>
+                <td><input type="number" id="d" placeholder="0"><br></td>
+                <td>$<span id="td">0</span></td>
+            </tr>
+            <tr>
+                <td>$1</td>
+                <td><input type="number" id="e" placeholder="0"><br></td>
+                <td>$<span id="te">0</span></td>
+            </tr>
+            <tr>
+                <td>$0.50</td>
+                <td><input type="number" id="f" placeholder="0"><br></td>
+                <td>$<span id="tf">0</span></td>
+            </tr>
+            <tr>
+                <td>$0.25</td>
+                <td><input type="number" id="g" placeholder="0"><br></td>
+                <td>$<span id="tg">0</span></td>
+            </tr>
+            <tr>
+                <td>$0.10</td>
+                <td><input type="number" id="h" placeholder="0"><br></td>
+                <td>$<span id="th">0</span></td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td>$<span id="total">0</span></td>
+            </tr>
+        </tbody>
+    </table>
+    <button onclick="cal()">Tính</button>
+    
+    <script>
+        function cal(){
+            var a = document.getElementById("a").value*50;
+            var b = document.getElementById("b").value*20;
+            var c = document.getElementById("c").value*10;
+            var d = document.getElementById("d").value*5;
+            var e = document.getElementById("e").value*1;
+            var f = document.getElementById("f").value*0.5;
+            var g = document.getElementById("g").value*0.25;
+            var h = document.getElementById("h").value*0.1;
+            document.getElementById("ta").innerHTML = a;
+            document.getElementById("tb").innerHTML = b;
+            document.getElementById("tc").innerHTML = c;
+            document.getElementById("td").innerHTML = d;
+            document.getElementById("te").innerHTML = e;
+            document.getElementById("tf").innerHTML = f;
+            document.getElementById("tg").innerHTML = g;
+            document.getElementById("th").innerHTML = h;
+            document.getElementById("total").innerHTML = a+b+c+d+e+f+g+h;
+        }
+    </script>
+</body>
+</html>
