@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hoá đơn của Khách</title>
+    <style>
+        /* CSS */
+        .button-19 {
+        appearance: button;
+        background-color: #1899D6;
+        border: solid transparent;
+        border-radius: 16px;
+        border-width: 0 0 4px;
+        box-sizing: border-box;
+        color: #FFFFFF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: din-round,sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: .8px;
+        line-height: 20px;
+        margin: 0;
+        outline: none;
+        overflow: visible;
+        padding: 13px 16px;
+        text-align: center;
+        text-transform: uppercase;
+        touch-action: manipulation;
+        transform: translateZ(0);
+        transition: filter .2s;
+        user-select: none;
+        -webkit-user-select: none;
+        vertical-align: middle;
+        white-space: nowrap;
+        /* width: 100%; */
+        }
+
+        .button-19:after {
+        background-clip: padding-box;
+        border: solid transparent;
+        border-radius: 16px;
+        border-width: 0 0 4px;
+        bottom: -4px;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: -1;
+        }
+
+        .button-blue {
+            background-color: #1CB0F6;
+        }
+
+        .button-red {
+            background-color: #f61c1c;
+        }
+        .button-green {
+            background-color: #4ff61c;
+        }
+
+        .button-19:main,
+        .button-19:focus {
+        user-select: auto;
+        }
+
+        .button-19:hover:not(:disabled) {
+        filter: brightness(1.1);
+        -webkit-filter: brightness(1.1);
+        }
+
+        .button-19:disabled {
+        cursor: auto;
+        }
+        label
+        {
+            display: inline-block;
+            float: left;
+            clear: left;
+            width: 250px;
+            text-align: left;
+        }
+        input 
+        {
+            display: inline-block;
+            float: left;
+        }
+        .table {
+        font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .table thead {
+        position: sticky;
+        top: 0;
+        }
+
+        .table thead th {
+        border: 1px solid #e4eff8;
+        background: white;
+        cursor: pointer;
+        }
+
+        .table thead th.header-label {
+        cursor: pointer;
+        background: linear-gradient(0deg, #e4eff8, #4578a2 5%, #e4eff8 150%);
+        color: white;
+        border: 1px solid white;
+        }
+
+        .table th,
+        .table td {
+        padding: 0.2rem 0.5rem;
+        text-align: center;
+        }
+
+        .table td {
+        border: 1px solid #e4eff8;
+        }
+
+        .table .tr-inputs th {
+        position: relative;
+        padding: 0;
+        padding-bottom: 1.2rem;
+        margin: 0;
+        }
+
+        .table .tr-inputs div {
+        position: absolute;
+        display: inline-block;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        }
+
+        .table input {
+        width: 100%;
+        box-sizing: border-box;
+        }
+
+        .center {
+        margin: auto;
+        width: 45%;
+        padding: 10px;
+        }
+        .info{
+        display: block;
+        margin-left: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div id="receptionist" style="display:block; z-index: 1;">
+    <h1>Đây là cho em tính cho khách nhe</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="header-label">Thợ ($)</th>
+                <th class="header-label">Làm nhiêu</th>
+                <th class="header-label">Tổng</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Anna</td>
+                <td><input type="number" id="a" placeholder="0"><br></td>
+                <td>$<span id="ta">0</span></td>
+            </tr>
+            <tr>
+                <td>Belle</td>
+                <td><input type="number" id="b" placeholder="0"><br></td>
+                <td>$<span id="tb">0</span></td>
+            </tr>
+            <tr>
+                <td>Kate</td>
+                <td><input type="number" id="c" placeholder="0"><br></td>
+                <td>$<span id="tc">0</span></td>
+            </tr>
+            <tr>
+                <td>Mia</td>
+                <td><input type="number" id="d" placeholder="0"><br></td>
+                <td>$<span id="td">0</span></td>
+            </tr>
+            <tr>
+                <td>Discount(%)</td>
+                <td><input type="number" id="e" placeholder="0"><br></td>
+                <td><span id="te">0</span>%</td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td>$<span id="total">0</span></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="button-19 center button-blue" role="button" onclick="cal()">Tính</button>
+    <button class="button-19 center button-green" role="button" onclick="bill()">Ra bill</button>
+    <button class="button-19 center button-red" role="button" onClick="window.location.reload();">Refresh</button>
+    </div>
+    <dialog id="bill" style="display: none;z-index: 2;">
+        <div class="info">
+            <h2> Belle's Nail Salon </h2>
+            <p> 
+                Address : 101 Victoria St W, Alliston, ON L9R 1L7</br>
+                Email   : we'll get our email soon!</br>
+                Phone   : (705) 434-0118
+            </p>
+        </div>
+        <table class="table">
+            <tr>
+                <td><strong>Service:</strong></td>
+                <td>$<span id="full">0</span></td>
+            </tr>
+            <tr>
+                <td><strong>Discount:</strong></td>
+                <td>$<span id="discount">0</span></td><br>
+            </tr>
+            <tr>
+                <td><strong>Total:</strong></td>
+                <td>$<span id="billtotal">0</span></td><br>
+            </tr>
+        </table>
+    </dialog>
+
+    <script>
+        function cal(){
+            let a = (document.getElementById("a").value == "") ? 0: document.getElementById("a").value;
+            let b = (document.getElementById("b").value == "") ? 0: document.getElementById("b").value;
+            let c = (document.getElementById("c").value == "") ? 0: document.getElementById("c").value;
+            let d = (document.getElementById("d").value == "") ? 0: document.getElementById("d").value;
+            let e = (document.getElementById("e").value == "") ? 0: document.getElementById("e").value;
+            document.getElementById("ta").innerHTML = a;
+            document.getElementById("tb").innerHTML = b;
+            document.getElementById("tc").innerHTML = c;
+            document.getElementById("td").innerHTML = d;
+            document.getElementById("te").innerHTML = e;
+            document.getElementById("total").innerHTML = ((+a + +b + +c + +d)*(1-e*0.01)).toFixed(2);
+            document.getElementById("full").innerHTML = (+a + +b + +c + +d);
+            document.getElementById("discount").innerHTML = ((+a + +b + +c + +d)*e*0.01).toFixed(2);
+            document.getElementById("billtotal").innerHTML = ((+a + +b + +c + +d)*(1-e*0.01)).toFixed(2);
+        }
+
+        function bill() {
+            var x = document.getElementById("bill");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
