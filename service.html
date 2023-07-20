@@ -186,7 +186,7 @@
             <tr>
                 <td>Discount(%)</td>
                 <td><input type="number" id="e" placeholder="0"><br></td>
-                <td><span id="te">0</span>%</td>
+                <td>-$<span id="te">0</span></td>
             </tr>
             <tr>
                 <td>Total</td>
@@ -195,7 +195,6 @@
             </tr>
         </tbody>
     </table>
-    <button class="button-19 center button-blue" role="button" onclick="cal()">Tính</button>
     <button class="button-19 center button-green" role="button" onclick="bill()">Ra bill</button>
     <button class="button-19 center button-red" role="button" onClick="window.location.reload();">Refresh</button>
     </div>
@@ -237,7 +236,7 @@
             document.getElementById("tb").innerHTML = b;
             document.getElementById("tc").innerHTML = c;
             document.getElementById("td").innerHTML = d;
-            document.getElementById("te").innerHTML = e;
+            document.getElementById("te").innerHTML = ((+a + +b + +c + +d)*e*0.01).toFixed(2);
             document.getElementById("total").innerHTML = ((+a + +b + +c + +d)*(1-e*0.01)).toFixed(2);
             document.getElementById("full").innerHTML = (+a + +b + +c + +d);
             document.getElementById("discount").innerHTML = ((+a + +b + +c + +d)*e*0.01).toFixed(2);
@@ -245,6 +244,7 @@
         }
 
         function bill() {
+            cal();
             var x = document.getElementById("bill");
             var y = document.getElementById("receptionist");
             if (x.style.display === "none") {
