@@ -156,6 +156,11 @@
         </thead>
         <tbody>
             <tr>
+                <td>$100</td>
+                <td><input type="number" id="j" placeholder="0"><br></td>
+                <td>$<span id="te">0</span></td>
+            </tr>
+            <tr>
                 <td>$50</td>
                 <td><input type="number" id="a" placeholder="0"><br></td>
                 <td>$<span id="ta">0</span></td>
@@ -164,6 +169,11 @@
                 <td>$20</td>
                 <td><input type="number" id="b" placeholder="0"><br></td>
                 <td>$<span id="tb">0</span></td>
+            </tr>
+            <tr>
+                <td>$10</td>
+                <td><input type="number" id="i" placeholder="0"><br></td>
+                <td>$<span id="te">0</span></td>
             </tr>
             <tr>
                 <td>$5</td>
@@ -216,6 +226,8 @@
             var f = document.getElementById("f").value*0.5;
             var g = document.getElementById("g").value*0.25;
             var h = document.getElementById("h").value*0.1;
+            var i = document.getElementById("i").value*10;
+            var j = document.getElementById("j").value*100;
             document.getElementById("ta").innerHTML = a;
             document.getElementById("tb").innerHTML = b;
             document.getElementById("tc").innerHTML = c;
@@ -224,7 +236,7 @@
             document.getElementById("tf").innerHTML = f.toFixed(2);
             document.getElementById("tg").innerHTML = g.toFixed(2);
             document.getElementById("th").innerHTML = h.toFixed(2);
-            document.getElementById("total").innerHTML = (a+b+c+d+e+f+g+h).toFixed(2);
+            document.getElementById("total").innerHTML = (a+b+c+d+e+f+g+h+i+j).toFixed(2);
         }
 
         function reset(){
@@ -236,6 +248,8 @@
             document.getElementById("f").innerHTML = 0;
             document.getElementById("g").innerHTML = 0;
             document.getElementById("h").innerHTML = 0;
+            document.getElementById("i").innerHTML = 0;
+            document.getElementById("j").innerHTML = 0;
         }
     </script>
 </body>
