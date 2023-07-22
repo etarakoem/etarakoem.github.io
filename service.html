@@ -165,27 +165,27 @@
         <tbody>
             <tr>
                 <td>Anna</td>
-                <td><input type="number" id="a" placeholder="0"><br></td>
+                <td><input type="number" onfocus="this.value=''" id="a" placeholder="0"><br></td>
                 <td>$<span id="ta">0</span></td>
             </tr>
             <tr>
                 <td>Lena</td>
-                <td><input type="number" id="b" placeholder="0"><br></td>
+                <td><input type="number" onfocus="this.value=''" id="b" placeholder="0"><br></td>
                 <td>$<span id="tb">0</span></td>
             </tr>
             <tr>
                 <td>Kate</td>
-                <td><input type="number" id="c" placeholder="0"><br></td>
+                <td><input type="number" onfocus="this.value=''" id="c" placeholder="0"><br></td>
                 <td>$<span id="tc">0</span></td>
             </tr>
             <tr>
                 <td>Mia</td>
-                <td><input type="number" id="d" placeholder="0"><br></td>
+                <td><input type="number" onfocus="this.value=''" id="d" placeholder="0"><br></td>
                 <td>$<span id="td">0</span></td>
             </tr>
             <tr>
                 <td>Discount(%)</td>
-                <td><input type="number" id="e" placeholder="0"><br></td>
+                <td><input type="number" onfocus="this.value=''" id="e" placeholder="0"><br></td>
                 <td>-$<span id="te">0</span></td>
             </tr>
             <tr>
@@ -221,11 +221,15 @@
                 <td><strong>Total:</strong></td>
                 <td>$<span id="billtotal">0</span></td><br>
             </tr>
-        </table>
+        </table><hr>
+        <label>Customer paid:</label><input onfocus="this.value=''" type="number" id="gives" placeholder="$0"><br>
+        Change: <strong>$<span id="change"></span></strong><br>
+        <button class="button-19 center button-green" role="button" onclick="change()">Change</button>
         <button class="button-19 center button-red" role="button" onclick="bill()">Close</button>
     </dialog>
 
     <script>
+
         function cal(){
             let a = (document.getElementById("a").value == "") ? 0: document.getElementById("a").value;
             let b = (document.getElementById("b").value == "") ? 0: document.getElementById("b").value;
@@ -240,7 +244,17 @@
             document.getElementById("total").innerHTML = ((+a + +b + +c + +d)*(1-e*0.01)).toFixed(2);
             document.getElementById("full").innerHTML = (+a + +b + +c + +d);
             document.getElementById("discount").innerHTML = ((+a + +b + +c + +d)*e*0.01).toFixed(2);
-            document.getElementById("billtotal").innerHTML = ((+a + +b + +c + +d)*(1-e*0.01)).toFixed(2);
+            document.getElementById("billtotal").innerHTML =((+a + +b + +c + +d)*(1-e*0.01)).toFixed(2);
+        }
+
+        function change() {
+            let a = (document.getElementById("a").value == "") ? 0: document.getElementById("a").value;
+            let b = (document.getElementById("b").value == "") ? 0: document.getElementById("b").value;
+            let c = (document.getElementById("c").value == "") ? 0: document.getElementById("c").value;
+            let d = (document.getElementById("d").value == "") ? 0: document.getElementById("d").value;
+            let e = (document.getElementById("e").value == "") ? 0: document.getElementById("e").value;
+            let f = (document.getElementById("gives").value == "") ? 0: document.getElementById("gives").value;
+            document.getElementById("change").innerHTML = (+f - ((+a + +b + +c + +d)*(1-e*0.01))).toFixed(2);
         }
 
         function bill() {
