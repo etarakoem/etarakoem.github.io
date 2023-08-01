@@ -173,6 +173,21 @@
                 <td>$<span id="tag_0">0</span></td>
             </tr>
             <tr>
+                <td><input id="name_1" type="text"></td>
+                <td><input type="number" class="service" placeholder="0"><br></td>
+                <td>$<span id="tag_1">0</span></td>
+            </tr>
+            <tr>
+                <td><input id="name_2" type="text"></td>
+                <td><input type="number" class="service" placeholder="0"><br></td>
+                <td>$<span id="tag_2">0</span></td>
+            </tr>
+            <tr>
+                <td><input id="name_3" type="text"></td>
+                <td><input type="number" class="service" placeholder="0"><br></td>
+                <td>$<span id="tag_3">0</span></td>
+            </tr>
+            <tr>
                 <td>Discount(%)</td>
                 <td><input type="number" id="discount_a" placeholder="0"><br></td>
                 <td>-$<span id="tag_discount">0</span></td>
@@ -185,10 +200,12 @@
         </tbody>
     </table>
     <br><br>
-    <button class="button-19 center button-blue" role="button" onclick="add()">(+) Add service (+)</button>
-    <button class="button-19 center button-red" role="button" onclick="remove()">(-) Remove service (-)</button><br><br>
     <button class="button-19 center button-green" role="button" onclick="bill()">($) To Bill ($)</button>
-    <button class="button-19 center button-red" role="button" onClick="window.location.reload();">Refresh</button>
+    <button class="button-19 center button-red" role="button" onClick="window.location.reload();">Refresh</button><br><br>
+
+    <button class="button-19 center button-blue" role="button" onclick="add()">(+) Add service (+)</button>
+    <button class="button-19 center button-red" role="button" onclick="remove()">(-) Remove service (-)</button>
+    
     </div>
     <dialog id="bill" style="display: none;z-index: 2;">
         <div class="info">
@@ -224,11 +241,11 @@
     </dialog>
 
     <script>
-        let count=0;
-        document.getElementById("name_"+count).focus();
+        let count=3;
+        document.getElementById("name_0").focus();
         function remove(){
             var tableRow = document.getElementById("price");
-            if (count > 0) {
+            if (count > 3) {
                 var row = tableRow.deleteRow(count+1);
                 count--;
             }
@@ -280,7 +297,7 @@
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 cell1.innerHTML = `<strong>Total before Tax:</strong>`;
-                cell2.innerHTML = `$${(sum*(1-discount*0.01))}`;
+                cell2.innerHTML = `$${(sum*(1-discount*0.01)).toFixed(2)}`;
 
                 var row1 = tableRow.insertRow(3);
                 var cell3 = row1.insertCell(0);
