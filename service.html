@@ -111,7 +111,7 @@
         .table th,
         .table td {
         padding: 0.2rem 0.5rem;
-        text-align: center;
+        text-align: left;
         }
 
         .table td {
@@ -144,6 +144,10 @@
         width: 45%;
         padding: 10px;
         }
+
+        .wide {
+            width: 500px;
+        }
         .info{
         display: block;
         margin-left: 0;
@@ -153,8 +157,8 @@
 </head>
 <body>
     <div id="receptionist" style="display:block; z-index: 1;">
-    <h1>Belle Nail and Spa</h1>
-    <table class="table">
+    <h1 class="table">Belle Nail and Spa</h1>
+    <table class="table" id="price">
         <thead>
             <tr>
                 <th class="header-label">Service</th>
@@ -164,29 +168,14 @@
         </thead>
         <tbody>
             <tr>
-                <td><input type="text"></td>
-                <td><input type="number" onfocus="this.value=''" id="a" placeholder="0"><br></td>
-                <td>$<span id="ta">0</span></td>
-            </tr>
-            <tr>
-                <td><input type="text"></td>
-                <td><input type="number" onfocus="this.value=''" id="b" placeholder="0"><br></td>
-                <td>$<span id="tb">0</span></td>
-            </tr>
-            <tr>
-                <td><input type="text"></td>
-                <td><input type="number"  id="c" placeholder="0"><br></td>
-                <td>$<span id="tc">0</span></td>
-            </tr>
-            <tr>
-                <td><input type="text"></td>
-                <td><input type="number" id="d" placeholder="0"><br></td>
-                <td>$<span id="td">0</span></td>
+                <td><input id="name_0" type="text"></td>
+                <td><input type="number" class="service" placeholder="0"><br></td>
+                <td>$<span id="tag_0">0</span></td>
             </tr>
             <tr>
                 <td>Discount(%)</td>
-                <td><input type="number" id="e" placeholder="0"><br></td>
-                <td>-$<span id="te">0</span></td>
+                <td><input type="number" id="discount_a" placeholder="0"><br></td>
+                <td>-$<span id="tag_discount">0</span></td>
             </tr>
             <tr>
                 <td>Total</td>
@@ -195,7 +184,10 @@
             </tr>
         </tbody>
     </table>
-    <button class="button-19 center button-green" role="button" onclick="bill()">To Bill</button>
+    <br><br>
+    <button class="button-19 center button-blue" role="button" onclick="add()">(+) Add service (+)</button>
+    <button class="button-19 center button-red" role="button" onclick="remove()">(-) Remove service (-)</button><br><br>
+    <button class="button-19 center button-green" role="button" onclick="bill()">($) To Bill ($)</button>
     <button class="button-19 center button-red" role="button" onClick="window.location.reload();">Refresh</button>
     </div>
     <dialog id="bill" style="display: none;z-index: 2;">
@@ -208,7 +200,7 @@
                 Phone   : (705) 434-0118
             </p>
         </div>
-        <table class="table center">
+        <table class="table center wide" id="total_result">
             <tr>
                 <td><strong>Service:</strong></td>
                 <td>$<span id="full">0</span></td>
@@ -218,17 +210,13 @@
                 <td>-$<span id="discount">0</span></td><br>
             </tr>
             <tr>
-                <td><strong>Tax (13%):</strong></td>
-                <td>$<span id="tax">0</span></td><br>
-            </tr>
-            <tr>
                 <td><strong>Total:</strong></td>
                 <td>$<span id="billtotal">0</span></td><br>
             </tr>
         </table><hr>
         <div id="cash" style="display: block">
-            <label>Customer paid:</label><input onfocus="this.value=''" type="number" id="gives" placeholder="$0"><br>
-            Change: <strong>$<span id="change"></span></strong><br>
+            <label for="gives">Customer paid:</label><input onfocus="this.value=''" type="number" id="gives" placeholder="$0"><br>
+            <p>Change: <strong>$<span id="change"></span></strong><br></p>
         </div>
         <button class="button-19 center button-green" role="button" onclick="change()">Change</button>
         <button class="button-19 center button-blue" role="button" onclick="tax()">Tax</button>
@@ -236,47 +224,92 @@
     </dialog>
 
     <script>
+        let count=0;
+        document.getElementById("name_"+count).focus();
+        function remove(){
+            var tableRow = document.getElementById("price");
+            if (count > 0) {
+                var row = tableRow.deleteRow(count+1);
+                count--;
+            }
+        }
+        function add(){
+            var priceTag = document.getElementsByClassName("service");
+            for (var i=0; i< priceTag.length; i++){
+                document.getElementById("tag_"+i).innerHTML = priceTag[i].value;
+            }
+            var tableRow = document.getElementById("price");
+            var row = tableRow.insertRow(count+2);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            cell1.innerHTML = `<input id="name_${++count}" type="text">`;
+            cell2.innerHTML = `<input type="number" onfocus="this.value=''" class="service" placeholder="0"><br>`;
+            cell3.innerHTML = `$<span id="tag_${count}">0</span>`;
+            document.getElementById("name_"+count).focus();
+        }
 
         function cal(){
-            let a = (document.getElementById("a").value == "") ? 0: document.getElementById("a").value;
-            let b = (document.getElementById("b").value == "") ? 0: document.getElementById("b").value;
-            let c = (document.getElementById("c").value == "") ? 0: document.getElementById("c").value;
-            let d = (document.getElementById("d").value == "") ? 0: document.getElementById("d").value;
-            let e = (document.getElementById("e").value == "") ? 0: document.getElementById("e").value;
-            document.getElementById("tax").innerHTML = 0;
-            document.getElementById("ta").innerHTML = a;
-            document.getElementById("tb").innerHTML = b;
-            document.getElementById("tc").innerHTML = c;
-            document.getElementById("td").innerHTML = d;
-            document.getElementById("te").innerHTML = ((+a + +b + +c + +d)*e*0.01).toFixed(2);
-            document.getElementById("total").innerHTML = ((+a + +b + +c + +d)*(1-e*0.01)).toFixed(2);
-            document.getElementById("full").innerHTML = (+a + +b + +c + +d);
-            document.getElementById("discount").innerHTML = ((+a + +b + +c + +d)*e*0.01).toFixed(2);
-            document.getElementById("billtotal").innerHTML =((+a + +b + +c + +d)*(1-e*0.01)).toFixed(2);
+            var priceTag = document.getElementsByClassName("service");
+            var sum=0;
+            for (var i=0; i< priceTag.length; i++){
+                sum += +priceTag[i].value;
+                document.getElementById("tag_"+i).innerHTML = priceTag[i].value;
+            }
+            console.log(sum);
+            let discount = (document.getElementById("discount_a").value == "") ? 0: document.getElementById("discount_a").value;
+            
+            document.getElementById("tag_discount").innerHTML = sum*discount*0.01.toFixed(2);
+            document.getElementById("total").innerHTML = (sum*(1-discount*0.01)).toFixed(2);
+            document.getElementById("full").innerHTML = sum;
+            document.getElementById("discount").innerHTML = (sum*discount*0.01).toFixed(2);
+            document.getElementById("billtotal").innerHTML =(sum*(1-discount*0.01)).toFixed(2);
         }
 
         function tax() {
-            let a = (document.getElementById("a").value == "") ? 0: document.getElementById("a").value;
-            let b = (document.getElementById("b").value == "") ? 0: document.getElementById("b").value;
-            let c = (document.getElementById("c").value == "") ? 0: document.getElementById("c").value;
-            let d = (document.getElementById("d").value == "") ? 0: document.getElementById("d").value;
-            let e = (document.getElementById("e").value == "") ? 0: document.getElementById("e").value;
-            document.getElementById("tax").innerHTML = ((+a + +b + +c + +d)*0.13).toFixed(2);
-            document.getElementById("billtotal").innerHTML = (((+a + +b + +c + +d)*(1-e*0.01))*1.13).toFixed(2);
+            let discount = (document.getElementById("discount_a").value == "") ? 0: document.getElementById("discount_a").value;
+            var priceTag = document.getElementsByClassName("service");
+            var sum=0;
+            for (var i=0; i< priceTag.length; i++){
+                sum += +priceTag[i].value;
+                document.getElementById("tag_"+i).innerHTML = priceTag[i].value;
+            }
+            var tableRow = document.getElementById("total_result");
+            if (tableRow.rows.length<5) {
+                var row = tableRow.insertRow(2);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                cell1.innerHTML = `<strong>Total before Tax:</strong>`;
+                cell2.innerHTML = `$${(sum*(1-discount*0.01))}`;
+
+                var row1 = tableRow.insertRow(3);
+                var cell3 = row1.insertCell(0);
+                var cell4 = row1.insertCell(1);
+                cell3.innerHTML = `<strong>Tax:</strong>`;
+                cell4.innerHTML = `+$${((sum*(1-discount*0.01))*0.13).toFixed(2)}`;
+            }
+            document.getElementById("billtotal").innerHTML = ((sum*(1-discount*0.01))*1.13).toFixed(2);
             document.getElementById("cash").style.display = "none";
         }
 
         function change(){
+            var tableRow = document.getElementById("total_result");
+            if (tableRow.rows.length == 5) {
+                tableRow.deleteRow(2);
+                tableRow.deleteRow(2);
+            }
             document.getElementById("cash").style.display = "block";
-            document.getElementById("tax").innerHTML = 0;
             cal();
-            let a = (document.getElementById("a").value == "") ? 0: document.getElementById("a").value;
-            let b = (document.getElementById("b").value == "") ? 0: document.getElementById("b").value;
-            let c = (document.getElementById("c").value == "") ? 0: document.getElementById("c").value;
-            let d = (document.getElementById("d").value == "") ? 0: document.getElementById("d").value;
-            let e = (document.getElementById("e").value == "") ? 0: document.getElementById("e").value;
-            let f = (document.getElementById("gives").value == "") ? 0: document.getElementById("gives").value;
-            document.getElementById("change").innerHTML = (+f - ((+a + +b + +c + +d)*(1-e*0.01))).toFixed(2);
+            let change = (document.getElementById("gives").value == "") ? 0: document.getElementById("gives").value;
+            let discount = (document.getElementById("discount_a").value == "") ? 0: document.getElementById("discount_a").value;
+            var priceTag = document.getElementsByClassName("service");
+            var sum=0;
+            for (var i=0; i< priceTag.length; i++){
+                sum += +priceTag[i].value;
+                document.getElementById("tag_"+i).innerHTML = priceTag[i].value;
+            }
+            document.getElementById("change").innerHTML = (+change - (sum*(1-discount*0.01))).toFixed(2);
+            document.getElementById("gives").value = 0;
         }
 
         function bill() {
