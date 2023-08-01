@@ -164,28 +164,28 @@
         </thead>
         <tbody>
             <tr>
-                <td>Anna</td>
+                <td><input type="text"></td>
                 <td><input type="number" onfocus="this.value=''" id="a" placeholder="0"><br></td>
                 <td>$<span id="ta">0</span></td>
             </tr>
             <tr>
-                <td>Lena</td>
+                <td><input type="text"></td>
                 <td><input type="number" onfocus="this.value=''" id="b" placeholder="0"><br></td>
                 <td>$<span id="tb">0</span></td>
             </tr>
             <tr>
-                <td>Kate</td>
-                <td><input type="number" onfocus="this.value=''" id="c" placeholder="0"><br></td>
+                <td><input type="text"></td>
+                <td><input type="number"  id="c" placeholder="0"><br></td>
                 <td>$<span id="tc">0</span></td>
             </tr>
             <tr>
-                <td>Mia</td>
-                <td><input type="number" onfocus="this.value=''" id="d" placeholder="0"><br></td>
+                <td><input type="text"></td>
+                <td><input type="number" id="d" placeholder="0"><br></td>
                 <td>$<span id="td">0</span></td>
             </tr>
             <tr>
                 <td>Discount(%)</td>
-                <td><input type="number" onfocus="this.value=''" id="e" placeholder="0"><br></td>
+                <td><input type="number" id="e" placeholder="0"><br></td>
                 <td>-$<span id="te">0</span></td>
             </tr>
             <tr>
@@ -218,13 +218,20 @@
                 <td>-$<span id="discount">0</span></td><br>
             </tr>
             <tr>
+                <td><strong>Tax (13%):</strong></td>
+                <td>$<span id="tax">0</span></td><br>
+            </tr>
+            <tr>
                 <td><strong>Total:</strong></td>
                 <td>$<span id="billtotal">0</span></td><br>
             </tr>
         </table><hr>
-        <label>Customer paid:</label><input onfocus="this.value=''" type="number" id="gives" placeholder="$0"><br>
-        Change: <strong>$<span id="change"></span></strong><br>
+        <div id="cash" style="display: block">
+            <label>Customer paid:</label><input onfocus="this.value=''" type="number" id="gives" placeholder="$0"><br>
+            Change: <strong>$<span id="change"></span></strong><br>
+        </div>
         <button class="button-19 center button-green" role="button" onclick="change()">Change</button>
+        <button class="button-19 center button-blue" role="button" onclick="tax()">Tax</button>
         <button class="button-19 center button-red" role="button" onclick="bill()">Close</button>
     </dialog>
 
@@ -236,6 +243,7 @@
             let c = (document.getElementById("c").value == "") ? 0: document.getElementById("c").value;
             let d = (document.getElementById("d").value == "") ? 0: document.getElementById("d").value;
             let e = (document.getElementById("e").value == "") ? 0: document.getElementById("e").value;
+            document.getElementById("tax").innerHTML = 0;
             document.getElementById("ta").innerHTML = a;
             document.getElementById("tb").innerHTML = b;
             document.getElementById("tc").innerHTML = c;
@@ -247,7 +255,21 @@
             document.getElementById("billtotal").innerHTML =((+a + +b + +c + +d)*(1-e*0.01)).toFixed(2);
         }
 
-        function change() {
+        function tax() {
+            let a = (document.getElementById("a").value == "") ? 0: document.getElementById("a").value;
+            let b = (document.getElementById("b").value == "") ? 0: document.getElementById("b").value;
+            let c = (document.getElementById("c").value == "") ? 0: document.getElementById("c").value;
+            let d = (document.getElementById("d").value == "") ? 0: document.getElementById("d").value;
+            let e = (document.getElementById("e").value == "") ? 0: document.getElementById("e").value;
+            document.getElementById("tax").innerHTML = ((+a + +b + +c + +d)*0.13).toFixed(2);
+            document.getElementById("billtotal").innerHTML = (((+a + +b + +c + +d)*(1-e*0.01))*1.13).toFixed(2);
+            document.getElementById("cash").style.display = "none";
+        }
+
+        function change(){
+            document.getElementById("cash").style.display = "block";
+            document.getElementById("tax").innerHTML = 0;
+            cal();
             let a = (document.getElementById("a").value == "") ? 0: document.getElementById("a").value;
             let b = (document.getElementById("b").value == "") ? 0: document.getElementById("b").value;
             let c = (document.getElementById("c").value == "") ? 0: document.getElementById("c").value;
@@ -259,6 +281,7 @@
 
         function bill() {
             cal();
+            document.getElementById("cash").style.display = "block";
             var x = document.getElementById("bill");
             var y = document.getElementById("receptionist");
             if (x.style.display === "none") {
