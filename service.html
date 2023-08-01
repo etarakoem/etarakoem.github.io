@@ -302,7 +302,7 @@
                 var row1 = tableRow.insertRow(3);
                 var cell3 = row1.insertCell(0);
                 var cell4 = row1.insertCell(1);
-                cell3.innerHTML = `<strong>Tax:</strong>`;
+                cell3.innerHTML = `<strong>Tax (13%):</strong>`;
                 cell4.innerHTML = `+$${((sum*(1-discount*0.01))*0.13).toFixed(2)}`;
             }
             document.getElementById("billtotal").innerHTML = ((sum*(1-discount*0.01))*1.13).toFixed(2);
