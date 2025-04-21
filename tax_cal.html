@@ -1,0 +1,354 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bill Calculator</title>
+  <style>
+    :root {
+      --bg: #f1f1f1;
+      --text: #000;
+      --card: #ffffff;
+      --primary: #007aff;
+      --primary-hover: #005bb5;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    .calculator {
+      max-width: 420px;
+      margin: auto;
+      padding: 20px;
+      background: var(--card);
+      height: 100vh;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .display {
+      text-align: center;
+    }
+
+    #inputDisplay {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #ccc;
+      padding: 10px;
+      background: #f9f9f9;
+      color: var(--text);
+    }
+
+    .summary {
+      width: 100%;
+      display: table;
+      margin-top: 10px;
+    }
+
+    .summary-row {
+      display: table-row;
+    }
+
+    .summary-label, .summary-value {
+      display: table-cell;
+      font-size: 1.1rem;
+      padding: 4px 6px;
+      text-align: left;
+    }
+
+    .summary-value {
+      text-align: right;
+    }
+#totalLabel, #total {
+      font-weight: bold;
+    }
+    .highlight {
+      background-color: #ffefc0;
+      padding: 3px 6px;
+      border-radius: 6px;
+    }
+
+    .toggle-container {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .toggle-button {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    .buttons-section {
+      overflow: hidden;
+      max-height: 1000px;
+      transition: max-height 0.4s ease;
+    }
+
+    .buttons-section.hidden {
+      max-height: 0;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .keypad,
+    .actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    .keypad {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .actions {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    button {
+      padding: 15px;
+      font-size: 1.2rem;
+      border: none;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .mode {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .active-tax {
+      background-color: #ffa500 !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display">
+      <div id="inputDisplay">0</div>
+      <div class="summary">
+      <div class="summary-row">
+          <div class="summary-label" id="subtotalLabel">Subtotal:</div>
+          <div class="summary-value" id="subtotal">$0.00</div>
+        </div>
+        <div class="summary-row" id="discountLabel">
+          <div class="summary-label" id="discountText">Discount:</div>
+          <div class="summary-value" id="discount">$0.00</div>
+        </div>
+        <div class="summary-row">
+          <div class="summary-label" id="taxLabel">Tax:</div>
+          <div class="summary-value" id="tax">$0.00</div>
+        </div>
+        <div class="summary-row">
+          <div class="summary-label" id="totalLabel">Total:</div>
+          <div class="summary-value" id="total">$0.00</div>
+        </div>
+        <div class="mode" id="modeHint"></div>
+    </div>
+
+    <div class="toggle-container">
+      <button class="toggle-button" onclick="toggleButtons()" id="toggleBtn">⬇️</button>
+    </div>
+
+    <div class="buttons-section" id="buttonsSection">
+      <div class="buttons">
+        <div class="keypad">
+          <button onclick="appendDigit('1')">1</button>
+          <button onclick="appendDigit('2')">2</button>
+          <button onclick="appendDigit('3')">3</button>
+          <button onclick="appendDigit('4')">4</button>
+          <button onclick="appendDigit('5')">5</button>
+          <button onclick="appendDigit('6')">6</button>
+          <button onclick="appendDigit('7')">7</button>
+          <button onclick="appendDigit('8')">8</button>
+          <button onclick="appendDigit('9')">9</button>
+          <button onclick="appendDigit('0')">0</button>
+          <button onclick="appendDigit('.')">.</button>
+          <button onclick="appendPlus()">+</button>
+          <button onclick="clearInput()">Xoá</button>
+        </div>
+
+        <div class="actions">
+          <button onclick="submitInput()">Nhập số</button>
+          <button onclick="startPercentOff()">Giảm giá (%)</button>
+          <button onclick="startDollarOff()">Giảm giá ($)</button>
+          <button id="taxBtn" onclick="toggleTax()">Cộng thuế</button>
+          <button onclick="resetAll()">Làm mới</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let inputEquation = '';
+    let subtotal = 0;
+    let discount = 0;
+    let taxRate = 0.13;
+    let applyTax = false;
+    let mode = 'submit';
+    let buttonsVisible = true;
+    let lastDiscountAmount = 0;
+    let lastDiscountPercent = null;
+
+    function updateDisplays() {
+      document.getElementById('inputDisplay').innerText = inputEquation || '0';
+
+      const taxAmount = applyTax ? (subtotal - discount) * taxRate : 0;
+      const total = subtotal - discount + taxAmount;
+
+      // Localize labels
+      const isVietnamese = buttonsVisible;
+      document.getElementById('subtotalLabel').innerText = isVietnamese ? 'Tạm tính:' : 'Subtotal:';
+      document.getElementById('discountText').innerText = isVietnamese ? 'Giảm giá:' : 'Discount:';
+      document.getElementById('taxLabel').innerText = isVietnamese ? 'Thuế:' : 'Tax:';
+      document.getElementById('totalLabel').innerText = isVietnamese ? 'Tổng cộng:' : 'Total:';
+
+      document.getElementById('subtotal').innerText = isVietnamese
+        ? `${subtotal.toFixed(2)}$`
+          : `${subtotal.toFixed(2)}$`;
+
+        let discountText = `${lastDiscountAmount.toFixed(2)}$`;
+      if (lastDiscountPercent !== null) {
+        discountText = `(${lastDiscountPercent.toFixed(1)}% off) `+ discountText;
+      }
+      document.getElementById('discount').innerText = discountText;
+
+      document.getElementById('tax').innerText = isVietnamese
+        ? `${taxAmount.toFixed(2)}$`
+            : `${taxAmount.toFixed(2)}$`;
+
+      document.getElementById('total').innerText = isVietnamese
+        ? `${total.toFixed(2)}$`
+            : `${total.toFixed(2)}$`;
+
+      // Highlighting
+      const hint = document.getElementById('modeHint');
+      const discountLabel = document.getElementById('discountLabel');
+      discountLabel.classList.remove('highlight');
+
+      if (mode === 'percent') {
+        hint.innerText = 'Nhập % giảm giá';
+        discountLabel.classList.add('highlight');
+      } else if (mode === 'dollar') {
+        hint.innerText = 'Nhập số tiền giảm';
+        discountLabel.classList.add('highlight');
+      } else {
+        hint.innerText = '';
+      }
+
+      document.getElementById('taxBtn').classList.toggle('active-tax', applyTax);
+    }
+
+    function appendDigit(digit) {
+      inputEquation += digit;
+      updateDisplays();
+    }
+
+    function appendPlus() {
+      if (inputEquation && !inputEquation.trim().endsWith('+')) {
+        inputEquation += ' + ';
+        updateDisplays();
+      }
+    }
+
+    function clearInput() {
+    inputEquation = inputEquation.slice(0, -1);
+  updateDisplays();
+    }
+
+    function submitInput() {
+      try {
+        const value = eval(inputEquation.replace(/[^0-9.+\-*/() ]/g, ''));
+        if (!isNaN(value)) {
+          if (mode === 'submit') {
+            subtotal += value;
+          } else if (mode === 'percent') {
+            discount = (subtotal * value) / 100;
+            lastDiscountAmount = discount;
+            lastDiscountPercent = value;
+          } else if (mode === 'dollar') {
+            discount = value;
+            lastDiscountAmount = discount;
+            lastDiscountPercent = null;
+          }
+        }
+      } catch (e) {
+        alert("Invalid equation");
+      }
+
+      inputEquation = '';
+      mode = 'submit';
+      updateDisplays();
+    }
+
+    function startPercentOff() {
+      const value = parseFloat(inputEquation);
+      if (!isNaN(value)) {
+        discount = (subtotal * value) / 100;
+      }
+      mode = 'percent';
+      inputEquation = '';
+      updateDisplays();
+    }
+
+    function startDollarOff() {
+      const value = parseFloat(inputEquation);
+      if (!isNaN(value)) {
+        discount = value;
+      }
+      mode = 'dollar';
+      inputEquation = '';
+      updateDisplays();
+    }
+
+    function toggleTax() {
+      applyTax = !applyTax;
+      updateDisplays();
+    }
+
+    function resetAll() {
+      inputEquation = '';
+      subtotal = 0;
+      discount = 0;
+      lastDiscountAmount = 0;
+      lastDiscountPercent = null;
+      applyTax = false;
+      mode = 'submit';
+      updateDisplays();
+    }
+
+    function toggleButtons() {
+      const section = document.getElementById('buttonsSection');
+      const toggleBtn = document.getElementById('toggleBtn');
+      buttonsVisible = !buttonsVisible;
+      section.classList.toggle('hidden', !buttonsVisible);
+      toggleBtn.innerText = buttonsVisible ? '⬇️' : '⬆️';
+      updateDisplays(); // update language
+    }
+
+    updateDisplays();
+  </script>
+</body>
+</html>
+
